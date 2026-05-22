@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+{% block title %}{{ project.slug }} — GitPulse{% endblock %}
+{% block content %}
+<div>
+  <a href="/dashboard" class="text-gray-400 hover:text-gray-700 text-sm">← Dashboard</a>
+  <div class="flex items-center justify-between mt-2 mb-6">
+    <div>
+      <h1 class="text-xl font-semibold text-gray-900">{{ project.github_repo_full_name }}</h1>
+      <p class="text-sm text-gray-400 mt-0.5">Public: <a href="/{{ user.username }}/{{ project.slug }}" target="_blank" class="text-indigo-500 hover:underline">{{ base_url }}/{{ user.username }}/{{ project.slug }}</a></p>
+    </div>
+  </div>
+
+  <!-- Webhook & Embed Setup Cards -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+
+    <!-- Webhook Card -->
+    <div class="bg-white border border-gray-200 rounded-xl p-5 shadow-sm">
+      <div class="flex items-center gap-2 mb-3">
+        <div class="w-7 h-7 bg-orange-100 rounded-lg flex items-center justify-center">
+          <svg class="w-4 h-4 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+        </div>
+        <h2 class="font-medium text-gray-900 text-sm">Auto-changelog via Webhook</h2>
+      </div>
+      <p class="text-xs text-gray-500 mb-3">Her push'ta otomatik draft oluşturmak için bu URL'i GitHub repo ayarlarına ekle:</p>
+      <div class="bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 flex items-center justify-between gap-2">
+        <code class="text-xs text-gray-700 break-all">{{ base_url }}/webhook/github/{{ project.id }}/{{ project.webhook_token }}</code>
+        <button onclick="navigator.clipboard.writeText('{{ base_url }}/webhook/github/{{ project.id }}/{{ project.webhook_token }}')"
+          class="shrink-0 text-xs text-indigo-500 hover:text-indigo-700 font-medium">Copy</button>
+      </div>
+      <p class="text-xs text-gray-400 mt-2">GitHub → Repo → Settings → Webhooks → Add webhook · Content type: <code>application/json</code></p>
+    </div>
+
+    <!-- Embed Card -->
+    <div class="bg-white border border-gray-200 rounded-xl p-5 shadow-sm">
+      <div class="flex items-center gap-2 mb-3">
+        <div class="w-7 h-7 bg-indigo-100 rounded-lg flex items-center justify-center">
+          <svg class="w-4 h-4 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+        </div>
+        <h2 class="font-medium text-gray-900 text-sm">Embed on Your Site</h2>
+      </div>
+      <p class="text-xs text-gray-500 mb-3">Kendi sitene yapıştır — changelog otomatik yüklenir:</p>
+      <div class="bg-gray-50 border border-gray-200 rounded-lg px-3 py-2">
+        <code class="text-xs text-gray-700 break-all">&lt;div id="gitpulse-changelog"&gt;&lt;/div&gt;<br>&lt;script src="{{ base_url }}/embed/{{ user.username }}/{{ project.slug }}.js"&gt;&lt;/script&gt;</code>
+      </div>
+      <button onclick="navigator.clipboard.writeText('<div id=\'gitpulse-changelog\'></div>\n<script src=\'{{ base_url }}/embed/{{ user.username }}/{{ project.slug }}.js\'><\/script>')"
+        class="mt-2 text-xs text-indigo-500 hover:text-indigo-700 font-medium">Copy embed code</button>
+      <p class="text-xs text-gray-400 mt-1">Ya da iframe: <a href="/embed/{{ user.username }}/{{ project.slug }}" target="_blank" class="text-indigo-400 hover:underline">önizle →</a></p>
+    </div>
+
+  </div>
+
+  <!-- Generate form -->
+  {% if can_generate %}
+  <div class="bg-white border border-gray-200 rounded-xl shadow-sm p-6 mb-6">
+    <h2 class="font-medium text-gray-900 mb-4">Manuel Changelog Üret</h2>
+    <form hx-post="/projects/{{ project.id }}/generate" hx-target="#changelog-result" hx-swap="innerHTML" hx-indicator="#gen-spinner">
+      <div class="flex gap-3 items-end">
+        <div class="flex-1">
+          <label class="block text-xs font-medium text-gray-500 mb-1">Version tag (e.g. v1.2.0)</label>
+          <input name="version" type="text" placeholder="v1.0.0"
+            class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-300" />
+        </div>
+        <button type="submit" class="bg-indigo-600 text-white px-5 py-2 rounded-lg text-sm font-medium hover:bg-indigo-500 transition-colors flex items-center gap-2">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+          Generate
+          <span id="gen-spinner" class="htmx-indicator text-indigo-200 text-xs">…</span>
+        </button>
+      </div>
+    </form>
+    <div id="changelog-result" class="mt-4"></div>
+  </div>
+  {% else %}
+  <div class="bg-amber-50 border border-amber-200 rounded-xl p-5 mb-6 text-sm text-amber-800">
+    Monthly limit reached ({{ limit }} changelogs). <a href="/pricing" class="font-medium underline">Upgrade →</a>
+  </div>
+  {% endif %}
+
+  <!-- Changelogs list -->
+  <h2 class="font-medium text-gray-900 mb-3">All Changelogs</h2>
+  {% if changelogs %}
+  <div class="space-y-3">
+    {% for cl in changelogs %}
+    <div class="bg-white border border-gray-200 rounded-xl p-5 shadow-sm">
+      <div class="flex items-center justify-between mb-2">
+        <div class="flex items-center gap-2">
+          <span class="text-sm font-semibold text-gray-900">{{ cl.version }}</span>
+          {% if cl.is_published %}
+          <span class="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full font-medium">Published</span>
+          {% else %}
+          <span class="text-xs bg-yellow-100 text-yellow-700 px-2 py-0.5 rounded-full font-medium">Draft</span>
+          {% endif %}
+          {% if cl.title.startswith('Auto-draft') %}
+          <span class="text-xs bg-orange-100 text-orange-600 px-2 py-0.5 rounded-full">auto</span>
+          {% endif %}
+        </div>
+        <span class="text-xs text-gray-400">{{ cl.created_at.strftime('%b %d, %Y %H:%M') }}</span>
+      </div>
+      <div class="prose text-sm text-gray-600" id="cl-{{ cl.id }}"></div>
+      <script>document.getElementById("cl-{{ cl.id }}").innerHTML = marked.parse(`{{ cl.content_md | replace('`', '\\`') | replace('\n', '\\n') }}`);</script>
+      {% if not cl.is_published %}
+      <div class="mt-3 pt-3 border-t border-gray-100">
+        <button hx-post="/projects/{{ project.id }}/changelogs/{{ cl.id }}/publish"
+          hx-target="#pub-{{ cl.id }}" hx-swap="outerHTML"
+          class="text-xs text-indigo-600 font-medium hover:underline">Publish</button>
+        <span id="pub-{{ cl.id }}"></span>
+      </div>
+      {% endif %}
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <p class="text-sm text-gray-400">No changelogs yet. Generate your first one above or set up the webhook.</p>
+  {% endif %}
+</div>
+{% endblock %}

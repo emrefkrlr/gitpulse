@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{ project.slug }} Changelog</title>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: Inter, system-ui, sans-serif; font-size: 14px; color: #374151; background: #fff; padding: 16px; }
+    .entry { margin-bottom: 28px; padding-bottom: 28px; border-bottom: 1px solid #f3f4f6; }
+    .entry:last-child { border-bottom: none; }
+    .meta { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+    .version { background: #111; color: #fff; font-size: 11px; font-weight: 600; padding: 2px 10px; border-radius: 999px; }
+    .date { font-size: 11px; color: #9ca3af; }
+    .prose h2 { font-size: 13px; font-weight: 600; margin: 12px 0 4px; }
+    .prose ul { padding-left: 18px; list-style: disc; }
+    .prose li { margin: 3px 0; line-height: 1.5; }
+    .footer { font-size: 11px; color: #d1d5db; text-align: center; padding-top: 12px; }
+    .footer a { color: #a5b4fc; text-decoration: none; }
+  </style>
+</head>
+<body>
+  {% if changelogs %}
+    {% for cl in changelogs %}
+    <div class="entry">
+      <div class="meta">
+        <span class="version">{{ cl.version }}</span>
+        <span class="date">{{ cl.published_at.strftime('%B %d, %Y') if cl.published_at else '' }}</span>
+      </div>
+      <div class="prose" id="e{{ cl.id }}"></div>
+      <script>document.getElementById("e{{ cl.id }}").innerHTML = marked.parse(`{{ cl.content_md | replace('`', '\\`') | replace('\n', '\\n') }}`);</script>
+    </div>
+    {% endfor %}
+  {% else %}
+    <p style="color:#9ca3af;font-size:13px;">No changelogs yet.</p>
+  {% endif %}
+  <div class="footer">Powered by <a href="/" target="_blank">GitPulse</a></div>
+</body>
+</html>

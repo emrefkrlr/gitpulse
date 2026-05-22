@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}GitPulse — Automated Changelogs from Git{% endblock %}
+{% block main_class %}{% endblock %}
+{% block content %}
+<div class="min-h-screen flex flex-col">
+  <div class="flex-1 flex flex-col items-center justify-center text-center px-6 py-24">
+    <div class="inline-flex items-center gap-2 text-xs font-medium text-indigo-600 bg-indigo-50 px-3 py-1 rounded-full mb-6">
+      <span class="w-2 h-2 bg-indigo-500 rounded-full animate-pulse"></span>
+      Now in beta — free to start
+    </div>
+    <h1 class="text-5xl font-bold tracking-tight text-gray-900 max-w-2xl leading-tight">
+      Your Git commits,<br/>turned into <span class="text-indigo-600">beautiful changelogs</span>
+    </h1>
+    <p class="mt-5 text-lg text-gray-500 max-w-xl">
+      Connect your GitHub repo. GitPulse reads your commits and writes a human-friendly changelog — automatically.
+    </p>
+    {% if error %}
+    <div class="mt-4 text-sm text-red-600 bg-red-50 px-4 py-2 rounded-lg">Authentication error. Please try again.</div>
+    {% endif %}
+    <a href="/auth/github"
+       class="mt-8 inline-flex items-center gap-2 bg-gray-900 text-white px-6 py-3 rounded-lg font-medium text-sm hover:bg-gray-700 transition-colors shadow-sm">
+      <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.38.6.1.82-.26.82-.58v-2.03c-3.34.73-4.04-1.6-4.04-1.6-.54-1.38-1.33-1.75-1.33-1.75-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.8 1.3 3.48 1 .1-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 013-.4c1.02 0 2.04.13 3 .4 2.29-1.55 3.3-1.23 3.3-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.69.83.57C20.57 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg>
+      Connect with GitHub — it's free
+    </a>
+    <p class="mt-3 text-xs text-gray-400">No credit card required. 3 changelogs/month free forever.</p>
+  </div>
+  <div class="bg-gray-50 border-t border-gray-100 px-6 py-16">
+    <div class="max-w-4xl mx-auto">
+      <h2 class="text-2xl font-semibold text-center mb-12 text-gray-900">How it works</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
+          <div class="w-8 h-8 rounded-lg bg-indigo-600 text-white flex items-center justify-center text-sm font-bold mb-4">1</div>
+          <h3 class="font-semibold text-gray-900 mb-2">Connect your repo</h3>
+          <p class="text-sm text-gray-500">GitHub OAuth in one click. We only read your commits — never write to your code.</p>
+        </div>
+        <div class="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
+          <div class="w-8 h-8 rounded-lg bg-indigo-600 text-white flex items-center justify-center text-sm font-bold mb-4">2</div>
+          <h3 class="font-semibold text-gray-900 mb-2">Generate changelog</h3>
+          <p class="text-sm text-gray-500">Our AI turns your commits into clear, user-friendly release notes instantly.</p>
+        </div>
+        <div class="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
+          <div class="w-8 h-8 rounded-lg bg-indigo-600 text-white flex items-center justify-center text-sm font-bold mb-4">3</div>
+          <h3 class="font-semibold text-gray-900 mb-2">Publish & share</h3>
+          <p class="text-sm text-gray-500">Your changelog gets a public URL. Embed it anywhere with one script tag.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer class="border-t border-gray-100 px-6 py-6 text-center text-xs text-gray-400">
+    © 2026 GitPulse · <a href="/pricing" class="hover:text-gray-600">Pricing</a>
+  </footer>
+</div>
+{% endblock %}

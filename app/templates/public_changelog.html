@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{ project.slug }} Changelog</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+    body { font-family: 'Inter', sans-serif; }
+    .prose h2 { font-size: 1rem; font-weight: 600; margin: 1rem 0 0.4rem; }
+    .prose ul { list-style: disc; padding-left: 1.25rem; }
+    .prose li { margin: 0.3rem 0; font-size: 0.875rem; color: #374151; }
+  </style>
+</head>
+<body class="bg-white text-gray-900">
+<div class="max-w-2xl mx-auto px-6 py-16">
+  <div class="mb-10">
+    <div class="flex items-center gap-2 mb-2">
+      <span class="text-gray-400 text-sm">{{ owner.username }} /</span>
+      <h1 class="text-2xl font-bold text-gray-900">{{ project.slug }}</h1>
+    </div>
+    <p class="text-sm text-gray-400">Changelog · Powered by <a href="/" class="text-indigo-500 hover:underline">GitPulse</a></p>
+  </div>
+  {% if changelogs %}
+    {% for cl in changelogs %}
+    <article class="mb-10 pb-10 border-b border-gray-100 last:border-0">
+      <div class="flex items-center gap-3 mb-3">
+        <span class="text-sm font-semibold bg-gray-900 text-white px-3 py-1 rounded-full">{{ cl.version }}</span>
+        <time class="text-xs text-gray-400">{{ cl.published_at.strftime('%B %d, %Y') if cl.published_at else '' }}</time>
+      </div>
+      <div class="prose" id="pub-cl-{{ cl.id }}"></div>
+      <script>document.getElementById("pub-cl-{{ cl.id }}").innerHTML = marked.parse(`{{ cl.content_md | replace('`', '\\`') | replace('\n', '\\n') }}`);</script>
+    </article>
+    {% endfor %}
+  {% else %}
+  <div class="text-center py-16 text-gray-400"><p class="text-lg">No changelog entries yet.</p></div>
+  {% endif %}
+</div>
+</body>
+</html>
