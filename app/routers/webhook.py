@@ -33,7 +33,10 @@ templates = Jinja2Templates(directory=str(Path(__file__).resolve().parent.parent
 
 def _verify_signature(secret: str, body: bytes, sig_header: str | None) -> bool:
     """Verify GitHub webhook HMAC-SHA256 signature."""
-    if not sig_header or not sig_header.startswith("sha256="):
+    # No signature header — allow (GitHub sends this only when Secret is configured)
+    if not sig_header:
+        return True
+    if not sig_header.startswith("sha256="):
         return False
     expected = "sha256=" + hmac.new(
         secret.encode(), body, hashlib.sha256

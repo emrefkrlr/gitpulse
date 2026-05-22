@@ -21,3 +21,9 @@ async def landing(request: Request, db: AsyncSession = Depends(get_db)):
 async def pricing(request: Request, db: AsyncSession = Depends(get_db)):
     user = await get_current_user(request, db)
     return templates.TemplateResponse(request, "pricing.html", {"user": user})
+
+
+@router.get("/how-it-works", response_class=HTMLResponse)
+async def how_it_works(request: Request, db: AsyncSession = Depends(get_db)):
+    user = await get_current_user(request, db)
+    return templates.TemplateResponse(request, "how_it_works.html", {"user": user})

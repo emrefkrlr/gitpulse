@@ -35,7 +35,7 @@ class Settings(BaseSettings):
     lemonsqueezy_pro_variant_id: str = ""
 
     free_changelog_limit: int = 3
-    starter_changelog_limit: int = 25
+    starter_changelog_limit: int = 20
 
     @property
     def is_dev(self) -> bool:

@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+{% block title %}Nasıl Kullanılır — GitPulse{% endblock %}
+{% block content %}
+
+<div class="max-w-3xl mx-auto">
+  <div class="mb-10">
+    <a href="/" class="text-sm text-gray-400 hover:text-gray-700">← Ana sayfa</a>
+    <h1 class="text-3xl font-bold text-gray-900 mt-3">Nasıl Kullanılır?</h1>
+    <p class="text-gray-500 mt-2">GitHub'dan ilk changelog'a 5 dakikada ulaşın.</p>
+  </div>
+
+  <!-- Step 1 -->
+  <div class="mb-12">
+    <div class="flex items-center gap-3 mb-4">
+      <div class="w-8 h-8 rounded-lg bg-indigo-600 text-white flex items-center justify-center text-sm font-bold shrink-0">1</div>
+      <h2 class="text-lg font-semibold text-gray-900">GitHub ile giriş yap</h2>
+    </div>
+    <div class="ml-11 space-y-3 text-sm text-gray-600">
+      <p>Ana sayfadaki <strong>"GitHub ile Ücretsiz Başla"</strong> butonuna tıklayın. GitHub hesabınızla oturum açın ve izin verin.</p>
+      <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
+        <p class="text-xs font-medium text-gray-500 mb-1">📌 Not</p>
+        <p class="text-xs text-gray-500">Yalnızca commit geçmişinizi okuruz. Kodunuza hiçbir zaman yazmayız.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 2 -->
+  <div class="mb-12">
+    <div class="flex items-center gap-3 mb-4">
+      <div class="w-8 h-8 rounded-lg bg-indigo-600 text-white flex items-center justify-center text-sm font-bold shrink-0">2</div>
+      <h2 class="text-lg font-semibold text-gray-900">Repo'nu bağla</h2>
+    </div>
+    <div class="ml-11 space-y-3 text-sm text-gray-600">
+      <p>Dashboard'da <strong>"Load My Repos"</strong> butonuna tıklayın. Repo listeniz yüklenir. Changelog oluşturmak istediğiniz repo'nun yanındaki <strong>"Connect"</strong> butonuna basın.</p>
+      <p>Bağlantı kurulduktan sonra o projenin sayfasına yönlendirilirsiniz.</p>
+    </div>
+  </div>
+
+  <!-- Step 3 -->
+  <div class="mb-12">
+    <div class="flex items-center gap-3 mb-4">
+      <div class="w-8 h-8 rounded-lg bg-indigo-600 text-white flex items-center justify-center text-sm font-bold shrink-0">3</div>
+      <h2 class="text-lg font-semibold text-gray-900">Webhook kur (otomatik mod)</h2>
+    </div>
+    <div class="ml-11 space-y-4 text-sm text-gray-600">
+      <p>Proje sayfasındaki <strong>"Auto-changelog via Webhook"</strong> kartında bir URL görürsünüz. Bu URL'i kopyalayın.</p>
+      <div class="bg-indigo-50 border border-indigo-100 rounded-lg p-4 space-y-2 text-xs">
+        <p class="font-semibold text-indigo-800">GitHub'da şu adımları izleyin:</p>
+        <ol class="list-decimal list-inside space-y-1 text-indigo-700">
+          <li>Repo sayfanıza gidin → <strong>Settings</strong></li>
+          <li>Sol menüden <strong>Webhooks</strong> → <strong>Add webhook</strong></li>
+          <li><strong>Payload URL</strong>'e kopyaladığınız URL'i yapıştırın</li>
+          <li><strong>Content type</strong>'ı <code>application/json</code> olarak seçin</li>
+          <li><strong>Just the push event</strong> seçili bırakın</li>
+          <li><strong>Add webhook</strong> butonuna basın</li>
+        </ol>
+      </div>
+      <p>Bundan sonra her <code>git push</code>'ta GitPulse otomatik olarak bir draft changelog oluşturur.</p>
+      <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
+        <p class="text-xs font-medium text-gray-500 mb-1">📌 Not</p>
+        <p class="text-xs text-gray-500">Webhook kurmak zorunlu değil. İstediğiniz zaman proje sayfasından manuel olarak da changelog üretebilirsiniz.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 4 -->
+  <div class="mb-12">
+    <div class="flex items-center gap-3 mb-4">
+      <div class="w-8 h-8 rounded-lg bg-indigo-600 text-white flex items-center justify-center text-sm font-bold shrink-0">4</div>
+      <h2 class="text-lg font-semibold text-gray-900">Draft'ı onayla ve yayınla</h2>
+    </div>
+    <div class="ml-11 space-y-3 text-sm text-gray-600">
+      <p>Push yaptıktan sonra proje sayfanıza gelin. <strong>Draft</strong> etiketli bir changelog göreceksiniz. İçeriği inceleyin, beğendiyseniz <strong>"Publish"</strong> butonuna basın.</p>
+      <p>Yayınlanan changelog herkese açık bir URL'de görünür:</p>
+      <div class="bg-gray-900 rounded-lg px-4 py-3">
+        <code class="text-green-400 text-xs">https://gitpulse.io/kullanici_adin/proje_adin</code>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 5 -->
+  <div class="mb-12">
+    <div class="flex items-center gap-3 mb-4">
+      <div class="w-8 h-8 rounded-lg bg-indigo-600 text-white flex items-center justify-center text-sm font-bold shrink-0">5</div>
+      <h2 class="text-lg font-semibold text-gray-900">Kendi sitene göm (opsiyonel)</h2>
+    </div>
+    <div class="ml-11 space-y-4 text-sm text-gray-600">
+      <p>Proje sayfasındaki <strong>"Embed on Your Site"</strong> kartındaki kodu kopyalayın ve sitenize yapıştırın:</p>
+      <div class="bg-gray-900 rounded-lg px-4 py-3">
+        <code class="text-green-400 text-xs leading-relaxed">
+          &lt;div id="gitpulse-changelog"&gt;&lt;/div&gt;<br/>
+          &lt;script src="https://gitpulse.io/embed/kullanici/proje.js"&gt;&lt;/script&gt;
+        </code>
+      </div>
+      <p>Bu kadar. Changelog'unuz otomatik olarak sitenizde görünür ve her güncellemede yenilenir.</p>
+      <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
+        <p class="text-xs font-medium text-gray-500 mb-1">💡 İpucu</p>
+        <p class="text-xs text-gray-500">iframe tercih ediyorsanız "önizle →" linkine tıklayın, iframe src olarak kullanabilirsiniz.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAQ -->
+  <div class="border-t border-gray-100 pt-10 mb-10">
+    <h2 class="text-lg font-semibold text-gray-900 mb-6">Sık Sorulan Sorular</h2>
+    <div class="space-y-5">
+      {% for q, a in [
+        ("Hangi AI modelini kullanıyor?", "Öncelikli olarak Groq (llama-3.3-70b) kullanır. Kota dolunca OpenAI, Anthropic gibi alternatiflere otomatik geçer. Siz hiçbir şey yapmadan çalışmaya devam eder."),
+        ("Commit mesajlarım kötüyse ne olur?", "AI elinden geleni yapar. 'fix bug' gibi mesajlardan bile makul bir changelog çıkarır. Ama yayınlamadan önce düzenleyebilirsiniz — draft olarak kaydedilir."),
+        ("Private repo'larla çalışır mı?", "Evet. GitHub OAuth ile giriş yaptığınızda private repo'larınıza da erişim izni verebilirsiniz."),
+        ("Aylık limit dolunca ne olur?", "Yeni changelog üretemezsiniz, mevcut yayınlanmış changelog'larınız çalışmaya devam eder. Üst plana geçerek limitinizi artırabilirsiniz."),
+        ("Verilerimi silirsem ne olur?", "Hesabınızı sildiğinizde tüm projeleriniz ve changelog'larınız kalıcı olarak silinir."),
+      ] %}
+      <div>
+        <p class="font-medium text-gray-900 text-sm mb-1">{{ q }}</p>
+        <p class="text-sm text-gray-500">{{ a }}</p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="bg-indigo-50 rounded-2xl p-8 text-center">
+    <h3 class="font-semibold text-gray-900 mb-2">Hâlâ soru mu var?</h3>
+    <p class="text-sm text-gray-500 mb-4">Hemen başlayın, 3 changelog ücretsiz.</p>
+    <a href="/auth/github" class="inline-flex items-center gap-2 bg-indigo-600 text-white px-5 py-2.5 rounded-lg text-sm font-medium hover:bg-indigo-500 transition-colors">
+      GitHub ile Başla →
+    </a>
+  </div>
+
+</div>
+{% endblock %}
