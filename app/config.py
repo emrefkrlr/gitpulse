@@ -13,26 +13,21 @@ class Settings(BaseSettings):
     github_client_id: str = ""
     github_client_secret: str = ""
 
-    # ── AI provider chain ──────────────────────────────────────────────────
-    # Comma-separated list of  "<provider>:<api_key>"
-    # Supported providers: openai, anthropic, groq, openrouter
-    # System tries them in order; moves to next on any error.
-    # Example:
-    #   AI_PROVIDERS=openai:sk-abc...,groq:gsk_xyz...,anthropic:sk-ant-...
+    # AI provider chain
     ai_providers: str = ""
-
-    # Legacy single-key support (auto-converted to ai_providers if set)
     openai_api_key: str = ""
     anthropic_api_key: str = ""
 
+    # Email
     resend_api_key: str = ""
     resend_from_email: str = "noreply@gitpulse.io"
 
-    lemonsqueezy_api_key: str = ""
-    lemonsqueezy_webhook_secret: str = ""
-    lemonsqueezy_store_id: str = ""
-    lemonsqueezy_starter_variant_id: str = ""
-    lemonsqueezy_pro_variant_id: str = ""
+    # Polar.sh payments
+    polar_access_token: str = ""
+    polar_webhook_secret: str = ""
+    polar_starter_product_id: str = ""
+    polar_pro_product_id: str = ""
+    polar_env: str = "sandbox"  # "sandbox" or "production"
 
     free_changelog_limit: int = 3
     starter_changelog_limit: int = 20
@@ -41,14 +36,13 @@ class Settings(BaseSettings):
     def is_dev(self) -> bool:
         return self.app_env == "development"
 
+    @property
+    def polar_server(self) -> str:
+        return "sandbox" if self.polar_env == "sandbox" else "production"
+
     def get_ai_providers_string(self) -> str:
-        """
-        Return ai_providers string, falling back to legacy single keys
-        so existing .env files keep working without changes.
-        """
         if self.ai_providers.strip():
             return self.ai_providers.strip()
-        # Build from legacy keys
         parts = []
         if self.openai_api_key:
             parts.append(f"openai:{self.openai_api_key}")
@@ -58,6 +52,5 @@ class Settings(BaseSettings):
 
 
 settings = Settings()
-# Patch ai_providers to include legacy keys so ai.py only needs to read one field
 if not settings.ai_providers.strip():
     settings.ai_providers = settings.get_ai_providers_string()

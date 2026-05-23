@@ -1,16 +1,20 @@
 # Changelog
 
+## v1.3.0 — 2026-05-23
+### Added
+- **Polar.sh payment integration** — full subscription flow:
+  - `/pricing/checkout/starter` and `/pricing/checkout/pro` create Polar
+    checkout sessions and redirect user to hosted payment page
+  - `/polar/webhook` receives subscription events and upgrades/downgrades
+    user plan in DB automatically
+  - `/billing/success` confirmation page after payment
+  - `/billing` redirects to Polar customer portal (manage/cancel)
+- **Pricing page updated** — buttons now show "Current plan" for active plan,
+  "Upgrade" for others; logged-out users see sign-in prompt
+- **polar-sdk==0.31.3** added to requirements
+- Sandbox mode by default (`POLAR_ENV=sandbox`) — switch to `production`
+  when going live
+
 ## v1.2.3 — 2026-05-22
 ### Added
-- **Generate progress UI** — clicking Generate now shows:
-  - 3-step indicator: Fetching commits → AI writing → Ready
-  - Animated progress bar that advances through realistic stages
-  - Status text updates every ~1.8s ("Connecting to GitHub…",
-    "Fetching recent commits…", "AI is writing your changelog…" etc.)
-  - Button disables with "Generating…" label during request
-  - All resets automatically when result arrives
-
-## v1.2.2 — 2026-05-22
-### Fixed
-- All remaining Turkish strings translated to English
-- README rewritten with ngrok restart guide + testing checklist
+- Generate progress bar with step indicators

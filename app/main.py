@@ -10,7 +10,7 @@ from starlette.middleware.sessions import SessionMiddleware
 from app.config import settings
 from app.database import engine
 from app.models.user import Base  # noqa: F401
-from app.routers import auth, changelog, dashboard, embed, pages, webhook
+from app.routers import auth, changelog, dashboard, embed, pages, payments, webhook
 
 BASE_DIR = Path(__file__).resolve().parent
 STATIC_DIR = BASE_DIR / "static"
@@ -48,13 +48,13 @@ app.add_middleware(
 
 app.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="static")
 
-# Router sırası önemli — spesifik önce, genel sonra
 app.include_router(pages.router)
 app.include_router(auth.router)
 app.include_router(webhook.router)
 app.include_router(embed.router)
+app.include_router(payments.router)
 app.include_router(dashboard.router)
-app.include_router(changelog.router)  # /{username}/{slug} en sona
+app.include_router(changelog.router)
 
 
 @app.exception_handler(404)

@@ -5,40 +5,82 @@
   <h1 class="text-3xl font-bold text-gray-900">Simple, transparent pricing</h1>
   <p class="text-gray-500 mt-2">Start free. Upgrade when you need more.</p>
 </div>
+
 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+
+  <!-- Free -->
   <div class="rounded-2xl border border-gray-200 p-7 flex flex-col">
-    <h2 class="font-semibold text-gray-900 text-lg">Free</h2>
-    <div class="mt-2 mb-4"><span class="text-3xl font-bold text-gray-900">$0</span><span class="text-gray-400 text-sm">/month</span></div>
+    <h3 class="font-semibold text-gray-900 text-lg">Free</h3>
+    <div class="mt-2 mb-1"><span class="text-4xl font-bold text-gray-900">$0</span></div>
+    <p class="text-xs text-gray-400 mb-5">Free forever</p>
     <ul class="space-y-2 flex-1 text-sm text-gray-600">
       <li class="flex items-center gap-2"><svg class="w-4 h-4 text-green-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>3 changelogs/month</li>
       <li class="flex items-center gap-2"><svg class="w-4 h-4 text-green-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>1 project</li>
       <li class="flex items-center gap-2"><svg class="w-4 h-4 text-green-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Public changelog page</li>
+      <li class="flex items-center gap-2"><svg class="w-4 h-4 text-green-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>GitPulse branding</li>
     </ul>
-    <a href="/auth/github" class="mt-6 text-center py-2.5 rounded-lg text-sm font-medium bg-gray-100 text-gray-700 hover:bg-gray-200">Get Started Free</a>
+    {% if user %}
+      {% if user.plan.value == 'free' %}
+      <div class="mt-6 text-center py-2.5 rounded-lg text-sm font-medium bg-gray-50 text-gray-400 border border-gray-200">Current plan</div>
+      {% else %}
+      <a href="/billing" class="mt-6 text-center py-2.5 rounded-lg text-sm font-medium bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors">Manage</a>
+      {% endif %}
+    {% else %}
+    <a href="/auth/github" class="mt-6 text-center py-2.5 rounded-lg text-sm font-medium bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors">Get Started Free</a>
+    {% endif %}
   </div>
+
+  <!-- Starter -->
   <div class="rounded-2xl border-2 border-indigo-500 shadow-lg p-7 flex flex-col relative">
-    <span class="absolute -top-3 left-1/2 -translate-x-1/2 text-xs bg-indigo-600 text-white px-3 py-1 rounded-full font-medium">Most Popular</span>
-    <h2 class="font-semibold text-gray-900 text-lg">Starter</h2>
-    <div class="mt-2 mb-4"><span class="text-3xl font-bold text-gray-900">$12</span><span class="text-gray-400 text-sm">/month</span></div>
+    <span class="absolute -top-3 left-1/2 -translate-x-1/2 text-xs bg-indigo-600 text-white px-3 py-1 rounded-full font-medium whitespace-nowrap">Most Popular</span>
+    <h3 class="font-semibold text-gray-900 text-lg">Starter</h3>
+    <div class="mt-2 mb-1"><span class="text-4xl font-bold text-gray-900">$7</span><span class="text-gray-400 text-sm">/month</span></div>
+    <p class="text-xs text-gray-400 mb-5">Professional changelogs at coffee price</p>
     <ul class="space-y-2 flex-1 text-sm text-gray-600">
-      <li class="flex items-center gap-2"><svg class="w-4 h-4 text-green-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>25 changelogs/month</li>
+      <li class="flex items-center gap-2"><svg class="w-4 h-4 text-green-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>20 changelogs/month</li>
       <li class="flex items-center gap-2"><svg class="w-4 h-4 text-green-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>3 projects</li>
-      <li class="flex items-center gap-2"><svg class="w-4 h-4 text-green-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Custom domain</li>
+      <li class="flex items-center gap-2"><svg class="w-4 h-4 text-green-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Embed widget</li>
+      <li class="flex items-center gap-2"><svg class="w-4 h-4 text-green-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Remove GitPulse branding</li>
       <li class="flex items-center gap-2"><svg class="w-4 h-4 text-green-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Email notifications</li>
     </ul>
-    <a href="#" class="mt-6 text-center py-2.5 rounded-lg text-sm font-medium bg-indigo-600 text-white hover:bg-indigo-500">Get Starter</a>
+    {% if user %}
+      {% if user.plan.value == 'starter' %}
+      <div class="mt-6 text-center py-2.5 rounded-lg text-sm font-medium bg-indigo-50 text-indigo-600 border border-indigo-200">Current plan</div>
+      {% else %}
+      <a href="/pricing/checkout/starter" class="mt-6 text-center py-2.5 rounded-lg text-sm font-medium bg-indigo-600 text-white hover:bg-indigo-500 transition-colors">Upgrade to Starter</a>
+      {% endif %}
+    {% else %}
+    <a href="/auth/github" class="mt-6 text-center py-2.5 rounded-lg text-sm font-medium bg-indigo-600 text-white hover:bg-indigo-500 transition-colors">Get Starter — $7/mo</a>
+    {% endif %}
   </div>
+
+  <!-- Pro -->
   <div class="rounded-2xl border border-gray-200 p-7 flex flex-col">
-    <h2 class="font-semibold text-gray-900 text-lg">Pro</h2>
-    <div class="mt-2 mb-4"><span class="text-3xl font-bold text-gray-900">$29</span><span class="text-gray-400 text-sm">/month</span></div>
+    <h3 class="font-semibold text-gray-900 text-lg">Pro</h3>
+    <div class="mt-2 mb-1"><span class="text-4xl font-bold text-gray-900">$19</span><span class="text-gray-400 text-sm">/month</span></div>
+    <p class="text-xs text-gray-400 mb-5">For serious projects</p>
     <ul class="space-y-2 flex-1 text-sm text-gray-600">
       <li class="flex items-center gap-2"><svg class="w-4 h-4 text-green-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Unlimited changelogs</li>
       <li class="flex items-center gap-2"><svg class="w-4 h-4 text-green-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>10 projects</li>
-      <li class="flex items-center gap-2"><svg class="w-4 h-4 text-green-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Embed widget</li>
-      <li class="flex items-center gap-2"><svg class="w-4 h-4 text-green-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Remove branding</li>
+      <li class="flex items-center gap-2"><svg class="w-4 h-4 text-green-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Custom domain</li>
+      <li class="flex items-center gap-2"><svg class="w-4 h-4 text-green-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Priority support</li>
+      <li class="flex items-center gap-2"><svg class="w-4 h-4 text-green-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>All features</li>
     </ul>
-    <a href="#" class="mt-6 text-center py-2.5 rounded-lg text-sm font-medium bg-gray-100 text-gray-700 hover:bg-gray-200">Get Pro</a>
+    {% if user %}
+      {% if user.plan.value == 'pro' %}
+      <div class="mt-6 text-center py-2.5 rounded-lg text-sm font-medium bg-violet-50 text-violet-600 border border-violet-200">Current plan</div>
+      {% else %}
+      <a href="/pricing/checkout/pro" class="mt-6 text-center py-2.5 rounded-lg text-sm font-medium bg-gray-900 text-white hover:bg-gray-700 transition-colors">Upgrade to Pro</a>
+      {% endif %}
+    {% else %}
+    <a href="/auth/github" class="mt-6 text-center py-2.5 rounded-lg text-sm font-medium bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors">Get Pro — $19/mo</a>
+    {% endif %}
   </div>
+
 </div>
-<p class="text-center text-xs text-gray-400 mt-8">Payments via Lemon Squeezy · No VAT headaches for Turkish founders</p>
+
+<p class="text-center text-xs text-gray-400 mt-8">
+  Payments via Polar.sh · Secure checkout · Cancel anytime
+  {% if user %} · <a href="/billing" class="hover:text-gray-600">Manage subscription</a>{% endif %}
+</p>
 {% endblock %}
