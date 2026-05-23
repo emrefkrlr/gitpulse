@@ -58,20 +58,21 @@ async def checkout(plan: str, request: Request, db: AsyncSession = Depends(get_d
 
     try:
         polar = _get_polar_client()
-        result = polar.checkouts.create(request={
-            "products": [{"product_id": product_id}],
+        checkout_data = {
+            "products": [product_id],
             "success_url": f"{settings.app_base_url}/billing/success?plan={plan}",
-            "customer_email": user.email or "",
             "metadata": {
                 "user_id": str(user.id),
                 "plan": plan,
             },
-        })
+        }
+        if user.email:
+            checkout_data["customer_email"] = user.email
+        result = polar.checkouts.create(request=checkout_data)
         return RedirectResponse(result.url)
     except Exception as e:
         log.error("Polar checkout error: %s", e)
         raise HTTPException(status_code=500, detail=f"Checkout failed: {e}")
-
 
 # ── Webhook ───────────────────────────────────────────────────────────────────
 
@@ -109,8 +110,8 @@ async def polar_webhook(
         except Exception:
             raise HTTPException(status_code=400, detail="Invalid JSON")
 
-    event_type = event.get("type") if isinstance(event, dict) else getattr(event, "type", None)
-    log.info("Polar webhook received: %s", event_type)
+    event_type = event.get("type") if isinstance(event, dict) else getattr(event, "TYPE", None)
+    log.warning("POLAR WEBHOOK: type=%s", event_type)
 
     # Handle subscription events
     if event_type in ("subscription.created", "subscription.active", "subscription.updated"):
@@ -126,17 +127,22 @@ async def _get_subscription_data(event) -> dict:
     if isinstance(event, dict):
         data = event.get("data", {})
     else:
-        data = getattr(event, "data", {})
+        data = getattr(event, "data", None)
+        if data is None:
+            return {}
         if not isinstance(data, dict):
-            data = data.__dict__ if hasattr(data, "__dict__") else {}
+            data = {k: getattr(data, k, None) for k in data.model_fields} if hasattr(data, "model_fields") else {}
     return data
 
 
 async def _handle_subscription_activated(event, db: AsyncSession):
     data = await _get_subscription_data(event)
-    metadata = data.get("metadata", {}) or {}
+    metadata = data.get("metadata") or {}
+    if not isinstance(metadata, dict):
+        metadata = dict(metadata) if metadata else {}
     user_id = metadata.get("user_id")
     plan_name = metadata.get("plan", "starter")
+    log.warning("POLAR SUBSCRIPTION: user_id=%s plan=%s metadata=%s", user_id, plan_name, metadata)
 
     if not user_id:
         # Try to find user by email
