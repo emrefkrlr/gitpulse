@@ -10,7 +10,7 @@
     </div>
   </div>
 
-  <!-- Webhook & Embed Setup Cards -->
+  <!-- Webhook & Embed Cards -->
   <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
 
     <!-- Webhook Card -->
@@ -21,7 +21,7 @@
         </div>
         <h2 class="font-medium text-gray-900 text-sm">Auto-changelog via Webhook</h2>
       </div>
-      <p class="text-xs text-gray-500 mb-3">Her push'ta otomatik draft oluşturmak için bu URL'i GitHub repo ayarlarına ekle:</p>
+      <p class="text-xs text-gray-500 mb-3">Add this URL to your GitHub repo settings to auto-generate a draft on every push:</p>
       <div class="bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 flex items-center justify-between gap-2">
         <code class="text-xs text-gray-700 break-all">{{ base_url }}/webhook/github/{{ project.id }}/{{ project.webhook_token }}</code>
         <button onclick="navigator.clipboard.writeText('{{ base_url }}/webhook/github/{{ project.id }}/{{ project.webhook_token }}')"
@@ -38,13 +38,16 @@
         </div>
         <h2 class="font-medium text-gray-900 text-sm">Embed on Your Site</h2>
       </div>
-      <p class="text-xs text-gray-500 mb-3">Kendi sitene yapıştır — changelog otomatik yüklenir:</p>
+      <p class="text-xs text-gray-500 mb-3">Paste into your site — changelog loads automatically:</p>
       <div class="bg-gray-50 border border-gray-200 rounded-lg px-3 py-2">
         <code class="text-xs text-gray-700 break-all">&lt;div id="gitpulse-changelog"&gt;&lt;/div&gt;<br>&lt;script src="{{ base_url }}/embed/{{ user.username }}/{{ project.slug }}.js"&gt;&lt;/script&gt;</code>
       </div>
-      <button onclick="navigator.clipboard.writeText('<div id=\'gitpulse-changelog\'></div>\n<script src=\'{{ base_url }}/embed/{{ user.username }}/{{ project.slug }}.js\'><\/script>')"
-        class="mt-2 text-xs text-indigo-500 hover:text-indigo-700 font-medium">Copy embed code</button>
-      <p class="text-xs text-gray-400 mt-1">Ya da iframe: <a href="/embed/{{ user.username }}/{{ project.slug }}" target="_blank" class="text-indigo-400 hover:underline">önizle →</a></p>
+      <div class="mt-2 flex items-center gap-3">
+        <button onclick="navigator.clipboard.writeText('<div id=\'gitpulse-changelog\'></div>\n<script src=\'{{ base_url }}/embed/{{ user.username }}/{{ project.slug }}.js\'><\/script>')"
+          class="text-xs text-indigo-500 hover:text-indigo-700 font-medium">Copy embed code</button>
+        <span class="text-gray-300">·</span>
+        <a href="/embed/{{ user.username }}/{{ project.slug }}" target="_blank" class="text-xs text-gray-400 hover:text-gray-600">Preview iframe →</a>
+      </div>
     </div>
 
   </div>
@@ -52,7 +55,7 @@
   <!-- Generate form -->
   {% if can_generate %}
   <div class="bg-white border border-gray-200 rounded-xl shadow-sm p-6 mb-6">
-    <h2 class="font-medium text-gray-900 mb-4">Manuel Changelog Üret</h2>
+    <h2 class="font-medium text-gray-900 mb-4">Generate Changelog</h2>
     <form hx-post="/projects/{{ project.id }}/generate" hx-target="#changelog-result" hx-swap="innerHTML" hx-indicator="#gen-spinner">
       <div class="flex gap-3 items-end">
         <div class="flex-1">
