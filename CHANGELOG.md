@@ -1,24 +1,16 @@
 # Changelog
 
+## v1.2.3 — 2026-05-22
+### Added
+- **Generate progress UI** — clicking Generate now shows:
+  - 3-step indicator: Fetching commits → AI writing → Ready
+  - Animated progress bar that advances through realistic stages
+  - Status text updates every ~1.8s ("Connecting to GitHub…",
+    "Fetching recent commits…", "AI is writing your changelog…" etc.)
+  - Button disables with "Generating…" label during request
+  - All resets automatically when result arrives
+
 ## v1.2.2 — 2026-05-22
 ### Fixed
-- All remaining Turkish strings in project.html translated to English:
-  - "Her push'ta otomatik draft..." → "Add this URL to your GitHub repo settings..."
-  - "Kendi sitene yapıştır..." → "Paste into your site..."
-  - "Ya da iframe: önizle →" → "Preview iframe →"
-### Added
-- README.md completely rewritten with:
-  - Step-by-step ngrok restart guide (every PC restart)
-  - Full testing checklist
-  - Railway + Supabase free deploy instructions
-  - AI providers comparison table
-  - Security checklist
-
-## v1.2.1 — 2026-05-22
-### Added
-- DeepSeek provider
-- Full English translation
-
-## v1.2.0 — 2026-05-22
-### Added
-- New landing page, how-it-works page
+- All remaining Turkish strings translated to English
+- README rewritten with ngrok restart guide + testing checklist
