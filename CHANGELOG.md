@@ -1,23 +1,21 @@
 # Changelog
 
+## v1.2.1 — 2026-05-22
+### Added
+- **DeepSeek provider** — `deepseek:sk-...` format in AI_PROVIDERS.
+  Uses `deepseek-chat` model via OpenAI-compatible API. Very cheap and
+  high quality — recommended as first in the chain.
+### Changed
+- **Full English** — all templates, labels, buttons, nav, FAQ translated.
+  Site is now 100% English.
+- `.env.example` updated with DeepSeek and Polar.sh placeholders.
+
 ## v1.2.0 — 2026-05-22
 ### Added
-- **Landing page tamamen yenilendi** — gerçek özellikler, demo preview,
-  rakip karşılaştırma tablosu (Changelogfy, AnnounceKit), yeni fiyatlar
-- **"Nasıl Kullanılır" sayfası** — webhook kurulumundan embed'e adım adım
-  kılavuz, SSS, GitHub ayarları görselli açıklama (`/how-it-works`)
-- Nav'a "How it works" linki eklendi
-### Changed
-- Starter plan limiti 25 → 20 changelog/ay
-- Starter fiyatı $12 → $7/ay, Pro $29 → $19/ay (config'de güncellendi)
+- New landing page with comparison table and pricing
+- How it works page (/how-it-works)
 
 ## v1.1.0 — 2026-05-22
 ### Added
-- GitHub Webhook otomasyonu
+- GitHub Webhook automation
 - Embed widget (script + iframe)
-- webhook_token modele eklendi
-
-## v1.0.5 — 2026-05-21
-### Added
-- Multi-provider AI fallback (AI_PROVIDERS)
-- Groq model güncellendi

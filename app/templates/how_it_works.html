@@ -1,25 +1,25 @@
 {% extends "base.html" %}
-{% block title %}Nasıl Kullanılır — GitPulse{% endblock %}
+{% block title %}How It Works — GitPulse{% endblock %}
 {% block content %}
 
 <div class="max-w-3xl mx-auto">
   <div class="mb-10">
-    <a href="/" class="text-sm text-gray-400 hover:text-gray-700">← Ana sayfa</a>
-    <h1 class="text-3xl font-bold text-gray-900 mt-3">Nasıl Kullanılır?</h1>
-    <p class="text-gray-500 mt-2">GitHub'dan ilk changelog'a 5 dakikada ulaşın.</p>
+    <a href="/" class="text-sm text-gray-400 hover:text-gray-700">← Home</a>
+    <h1 class="text-3xl font-bold text-gray-900 mt-3">How It Works</h1>
+    <p class="text-gray-500 mt-2">From GitHub to your first changelog in 5 minutes.</p>
   </div>
 
   <!-- Step 1 -->
   <div class="mb-12">
     <div class="flex items-center gap-3 mb-4">
       <div class="w-8 h-8 rounded-lg bg-indigo-600 text-white flex items-center justify-center text-sm font-bold shrink-0">1</div>
-      <h2 class="text-lg font-semibold text-gray-900">GitHub ile giriş yap</h2>
+      <h2 class="text-lg font-semibold text-gray-900">Sign in with GitHub</h2>
     </div>
     <div class="ml-11 space-y-3 text-sm text-gray-600">
-      <p>Ana sayfadaki <strong>"GitHub ile Ücretsiz Başla"</strong> butonuna tıklayın. GitHub hesabınızla oturum açın ve izin verin.</p>
+      <p>Click the <strong>"Start Free with GitHub"</strong> button on the homepage. Authorize GitPulse and you'll land on your dashboard.</p>
       <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
-        <p class="text-xs font-medium text-gray-500 mb-1">📌 Not</p>
-        <p class="text-xs text-gray-500">Yalnızca commit geçmişinizi okuruz. Kodunuza hiçbir zaman yazmayız.</p>
+        <p class="text-xs font-medium text-gray-500 mb-1">📌 Note</p>
+        <p class="text-xs text-gray-500">We only read your commit history. We never write to your code.</p>
       </div>
     </div>
   </div>
@@ -28,11 +28,11 @@
   <div class="mb-12">
     <div class="flex items-center gap-3 mb-4">
       <div class="w-8 h-8 rounded-lg bg-indigo-600 text-white flex items-center justify-center text-sm font-bold shrink-0">2</div>
-      <h2 class="text-lg font-semibold text-gray-900">Repo'nu bağla</h2>
+      <h2 class="text-lg font-semibold text-gray-900">Connect a repository</h2>
     </div>
     <div class="ml-11 space-y-3 text-sm text-gray-600">
-      <p>Dashboard'da <strong>"Load My Repos"</strong> butonuna tıklayın. Repo listeniz yüklenir. Changelog oluşturmak istediğiniz repo'nun yanındaki <strong>"Connect"</strong> butonuna basın.</p>
-      <p>Bağlantı kurulduktan sonra o projenin sayfasına yönlendirilirsiniz.</p>
+      <p>On the dashboard, click <strong>"Load My Repos"</strong>. Your GitHub repositories will appear. Click <strong>"Connect"</strong> next to the repo you want to track.</p>
+      <p>You'll be taken directly to that project's page.</p>
     </div>
   </div>
 
@@ -40,25 +40,25 @@
   <div class="mb-12">
     <div class="flex items-center gap-3 mb-4">
       <div class="w-8 h-8 rounded-lg bg-indigo-600 text-white flex items-center justify-center text-sm font-bold shrink-0">3</div>
-      <h2 class="text-lg font-semibold text-gray-900">Webhook kur (otomatik mod)</h2>
+      <h2 class="text-lg font-semibold text-gray-900">Set up the webhook (auto mode)</h2>
     </div>
     <div class="ml-11 space-y-4 text-sm text-gray-600">
-      <p>Proje sayfasındaki <strong>"Auto-changelog via Webhook"</strong> kartında bir URL görürsünüz. Bu URL'i kopyalayın.</p>
+      <p>On the project page, find the <strong>"Auto-changelog via Webhook"</strong> card and copy the URL shown there.</p>
       <div class="bg-indigo-50 border border-indigo-100 rounded-lg p-4 space-y-2 text-xs">
-        <p class="font-semibold text-indigo-800">GitHub'da şu adımları izleyin:</p>
+        <p class="font-semibold text-indigo-800">In GitHub, follow these steps:</p>
         <ol class="list-decimal list-inside space-y-1 text-indigo-700">
-          <li>Repo sayfanıza gidin → <strong>Settings</strong></li>
-          <li>Sol menüden <strong>Webhooks</strong> → <strong>Add webhook</strong></li>
-          <li><strong>Payload URL</strong>'e kopyaladığınız URL'i yapıştırın</li>
-          <li><strong>Content type</strong>'ı <code>application/json</code> olarak seçin</li>
-          <li><strong>Just the push event</strong> seçili bırakın</li>
-          <li><strong>Add webhook</strong> butonuna basın</li>
+          <li>Go to your repo → <strong>Settings</strong></li>
+          <li>Click <strong>Webhooks</strong> in the left sidebar → <strong>Add webhook</strong></li>
+          <li>Paste the copied URL into <strong>Payload URL</strong></li>
+          <li>Set <strong>Content type</strong> to <code>application/json</code></li>
+          <li>Leave <strong>Just the push event</strong> selected</li>
+          <li>Click <strong>Add webhook</strong></li>
         </ol>
       </div>
-      <p>Bundan sonra her <code>git push</code>'ta GitPulse otomatik olarak bir draft changelog oluşturur.</p>
+      <p>From now on, every <code>git push</code> will automatically trigger a draft changelog.</p>
       <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
-        <p class="text-xs font-medium text-gray-500 mb-1">📌 Not</p>
-        <p class="text-xs text-gray-500">Webhook kurmak zorunlu değil. İstediğiniz zaman proje sayfasından manuel olarak da changelog üretebilirsiniz.</p>
+        <p class="text-xs font-medium text-gray-500 mb-1">📌 Note</p>
+        <p class="text-xs text-gray-500">The webhook is optional. You can always generate changelogs manually from the project page.</p>
       </div>
     </div>
   </div>
@@ -67,13 +67,13 @@
   <div class="mb-12">
     <div class="flex items-center gap-3 mb-4">
       <div class="w-8 h-8 rounded-lg bg-indigo-600 text-white flex items-center justify-center text-sm font-bold shrink-0">4</div>
-      <h2 class="text-lg font-semibold text-gray-900">Draft'ı onayla ve yayınla</h2>
+      <h2 class="text-lg font-semibold text-gray-900">Review and publish</h2>
     </div>
     <div class="ml-11 space-y-3 text-sm text-gray-600">
-      <p>Push yaptıktan sonra proje sayfanıza gelin. <strong>Draft</strong> etiketli bir changelog göreceksiniz. İçeriği inceleyin, beğendiyseniz <strong>"Publish"</strong> butonuna basın.</p>
-      <p>Yayınlanan changelog herkese açık bir URL'de görünür:</p>
+      <p>After a push, go to your project page. You'll see a <strong>Draft</strong> changelog. Review the AI-generated content and click <strong>"Publish"</strong> when ready.</p>
+      <p>The published changelog is available at a public URL:</p>
       <div class="bg-gray-900 rounded-lg px-4 py-3">
-        <code class="text-green-400 text-xs">https://gitpulse.io/kullanici_adin/proje_adin</code>
+        <code class="text-green-400 text-xs">https://gitpulse.io/your_username/your_project</code>
       </div>
     </div>
   </div>
@@ -82,34 +82,34 @@
   <div class="mb-12">
     <div class="flex items-center gap-3 mb-4">
       <div class="w-8 h-8 rounded-lg bg-indigo-600 text-white flex items-center justify-center text-sm font-bold shrink-0">5</div>
-      <h2 class="text-lg font-semibold text-gray-900">Kendi sitene göm (opsiyonel)</h2>
+      <h2 class="text-lg font-semibold text-gray-900">Embed on your site (optional)</h2>
     </div>
     <div class="ml-11 space-y-4 text-sm text-gray-600">
-      <p>Proje sayfasındaki <strong>"Embed on Your Site"</strong> kartındaki kodu kopyalayın ve sitenize yapıştırın:</p>
+      <p>Copy the embed code from the <strong>"Embed on Your Site"</strong> card on your project page and paste it anywhere on your website:</p>
       <div class="bg-gray-900 rounded-lg px-4 py-3">
         <code class="text-green-400 text-xs leading-relaxed">
           &lt;div id="gitpulse-changelog"&gt;&lt;/div&gt;<br/>
-          &lt;script src="https://gitpulse.io/embed/kullanici/proje.js"&gt;&lt;/script&gt;
+          &lt;script src="https://gitpulse.io/embed/username/project.js"&gt;&lt;/script&gt;
         </code>
       </div>
-      <p>Bu kadar. Changelog'unuz otomatik olarak sitenizde görünür ve her güncellemede yenilenir.</p>
+      <p>That's it. Your changelog loads automatically and stays up to date with every new publish.</p>
       <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
-        <p class="text-xs font-medium text-gray-500 mb-1">💡 İpucu</p>
-        <p class="text-xs text-gray-500">iframe tercih ediyorsanız "önizle →" linkine tıklayın, iframe src olarak kullanabilirsiniz.</p>
+        <p class="text-xs font-medium text-gray-500 mb-1">💡 Tip</p>
+        <p class="text-xs text-gray-500">Prefer an iframe? Click the "preview →" link on your project page and use that URL as your iframe src.</p>
       </div>
     </div>
   </div>
 
   <!-- FAQ -->
   <div class="border-t border-gray-100 pt-10 mb-10">
-    <h2 class="text-lg font-semibold text-gray-900 mb-6">Sık Sorulan Sorular</h2>
+    <h2 class="text-lg font-semibold text-gray-900 mb-6">Frequently Asked Questions</h2>
     <div class="space-y-5">
       {% for q, a in [
-        ("Hangi AI modelini kullanıyor?", "Öncelikli olarak Groq (llama-3.3-70b) kullanır. Kota dolunca OpenAI, Anthropic gibi alternatiflere otomatik geçer. Siz hiçbir şey yapmadan çalışmaya devam eder."),
-        ("Commit mesajlarım kötüyse ne olur?", "AI elinden geleni yapar. 'fix bug' gibi mesajlardan bile makul bir changelog çıkarır. Ama yayınlamadan önce düzenleyebilirsiniz — draft olarak kaydedilir."),
-        ("Private repo'larla çalışır mı?", "Evet. GitHub OAuth ile giriş yaptığınızda private repo'larınıza da erişim izni verebilirsiniz."),
-        ("Aylık limit dolunca ne olur?", "Yeni changelog üretemezsiniz, mevcut yayınlanmış changelog'larınız çalışmaya devam eder. Üst plana geçerek limitinizi artırabilirsiniz."),
-        ("Verilerimi silirsem ne olur?", "Hesabınızı sildiğinizde tüm projeleriniz ve changelog'larınız kalıcı olarak silinir."),
+        ("Which AI model does it use?", "GitPulse uses a fallback chain — it tries DeepSeek, then Groq (llama-3.3-70b), then OpenAI, then Anthropic. If one provider hits a quota or rate limit, it silently switches to the next one. You never see an error."),
+        ("What if my commit messages are bad?", "The AI does its best. Even vague messages like 'fix bug' will produce something reasonable. You can always edit the draft before publishing."),
+        ("Does it work with private repos?", "Yes. When you sign in via GitHub OAuth, you can grant access to private repositories as well."),
+        ("What happens when I hit the monthly limit?", "You won't be able to generate new changelogs, but your existing published ones stay live. Upgrade to a paid plan to increase your limit."),
+        ("What happens if I delete my account?", "All your projects and changelogs are permanently deleted."),
       ] %}
       <div>
         <p class="font-medium text-gray-900 text-sm mb-1">{{ q }}</p>
@@ -120,11 +120,11 @@
   </div>
 
   <!-- CTA -->
-  <div class="bg-indigo-50 rounded-2xl p-8 text-center">
-    <h3 class="font-semibold text-gray-900 mb-2">Hâlâ soru mu var?</h3>
-    <p class="text-sm text-gray-500 mb-4">Hemen başlayın, 3 changelog ücretsiz.</p>
+  <div class="bg-indigo-50 rounded-2xl p-8 text-center mb-10">
+    <h3 class="font-semibold text-gray-900 mb-2">Ready to get started?</h3>
+    <p class="text-sm text-gray-500 mb-4">3 changelogs free, no credit card needed.</p>
     <a href="/auth/github" class="inline-flex items-center gap-2 bg-indigo-600 text-white px-5 py-2.5 rounded-lg text-sm font-medium hover:bg-indigo-500 transition-colors">
-      GitHub ile Başla →
+      Start with GitHub →
     </a>
   </div>
 
