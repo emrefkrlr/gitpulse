@@ -3,15 +3,14 @@ from sqlalchemy.orm import DeclarativeBase
 
 from app.config import settings
 
-connect_args = {}
-if "pooler.supabase.com" in settings.database_url:
-    connect_args = {"statement_cache_size": 0}
+# Supabase transaction pooler requires statement_cache_size=0
+connect_args = {"statement_cache_size": 0} if "supabase" in settings.database_url else {}
 
 engine = create_async_engine(
     settings.database_url,
     echo=settings.is_dev,
-    pool_size=10,
-    max_overflow=20,
+    pool_size=5,
+    max_overflow=10,
     connect_args=connect_args,
 )
 
