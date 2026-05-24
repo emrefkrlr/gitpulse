@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GitPulse — Automated Changelogs from Git Commits</title>
+  <meta name="description" content="Connect your GitHub repo. On every push, AI automatically creates a changelog. You approve it, your users see it." />
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-P7Z06Q8DCH"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-P7Z06Q8DCH');
+  </script>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+  </style>
+</head>
+<body class="bg-white text-gray-900">
+
+  <!-- Nav -->
+  <nav class="border-b border-gray-100 px-6 py-4 flex items-center justify-between max-w-6xl mx-auto">
+    <div class="flex items-center gap-2 font-bold text-gray-900 text-lg">
+      <svg class="w-6 h-6 text-indigo-600" fill="currentColor" viewBox="0 0 20 20"><path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zm0 6a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1v-2zm0 6a1 1 0 011-1h6a1 1 0 010 2H4a1 1 0 01-1-1z"/></svg>
+      GitPulse
+    </div>
+    <div class="flex items-center gap-6 text-sm">
+      <a href="https://gitpulse-2p8d.onrender.com/how-it-works" class="text-gray-500 hover:text-gray-900">How it works</a>
+      <a href="https://gitpulse-2p8d.onrender.com/pricing" class="text-gray-500 hover:text-gray-900">Pricing</a>
+      <a href="https://gitpulse-2p8d.onrender.com/auth/github"
+         class="bg-gray-900 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-700 transition-colors">
+        Get Started Free
+      </a>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <div class="max-w-6xl mx-auto px-6 py-24 text-center">
+    <div class="inline-flex items-center gap-2 text-xs font-medium text-indigo-600 bg-indigo-50 px-3 py-1 rounded-full mb-6">
+      <span class="w-2 h-2 bg-indigo-500 rounded-full animate-pulse"></span>
+      Live — free to start
+    </div>
+    <h1 class="text-6xl font-extrabold tracking-tight text-gray-900 max-w-3xl mx-auto leading-tight">
+      Your Git commits,<br/>turned into <span class="text-indigo-600">beautiful changelogs</span>
+    </h1>
+    <p class="mt-6 text-xl text-gray-500 max-w-2xl mx-auto leading-relaxed">
+      Connect your GitHub repo. On every push, AI automatically creates a changelog draft.
+      You approve it, your users see it.
+    </p>
+    <div class="mt-8 flex items-center justify-center gap-4">
+      <a href="https://gitpulse-2p8d.onrender.com/auth/github"
+         class="inline-flex items-center gap-2 bg-gray-900 text-white px-7 py-3.5 rounded-xl font-semibold text-sm hover:bg-gray-700 transition-colors shadow-lg">
+        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.38.6.1.82-.26.82-.58v-2.03c-3.34.73-4.04-1.6-4.04-1.6-.54-1.38-1.33-1.75-1.33-1.75-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.8 1.3 3.48 1 .1-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 013-.4c1.02 0 2.04.13 3 .4 2.29-1.55 3.3-1.23 3.3-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.69.83.57C20.57 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg>
+        Start Free with GitHub
+      </a>
+      <a href="https://gitpulse-2p8d.onrender.com/how-it-works"
+         class="text-sm text-gray-500 hover:text-gray-900 underline underline-offset-2">
+        How it works →
+      </a>
+    </div>
+    <p class="mt-3 text-xs text-gray-400">No credit card · 3 changelogs/month free forever</p>
+  </div>
+
+  <!-- Demo -->
+  <div class="bg-gray-50 border-y border-gray-100 py-14">
+    <div class="max-w-3xl mx-auto px-6">
+      <p class="text-xs font-semibold text-gray-400 uppercase tracking-widest text-center mb-8">Sample output — generated from real commits</p>
+      <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-8">
+        <div class="flex items-center gap-3 mb-5">
+          <span class="bg-gray-900 text-white text-xs font-bold px-3 py-1 rounded-full">v2.1.0</span>
+          <span class="text-xs text-gray-400">May 24, 2026</span>
+        </div>
+        <div class="space-y-4 text-sm text-gray-700">
+          <div>
+            <p class="font-semibold mb-2">✨ New Features</p>
+            <ul class="list-disc list-inside space-y-1 text-gray-500">
+              <li>You can now embed your changelog on any website with a single script tag</li>
+              <li>Webhooks automatically generate draft changelogs on every push</li>
+              <li>AI fallback chain ensures uptime even when one provider is down</li>
+            </ul>
+          </div>
+          <div>
+            <p class="font-semibold mb-2">🐛 Bug Fixes</p>
+            <ul class="list-disc list-inside space-y-1 text-gray-500">
+              <li>We fixed the authentication issue on HTTP environments</li>
+            </ul>
+          </div>
+          <div>
+            <p class="font-semibold mb-2">⚡ Improvements</p>
+            <ul class="list-disc list-inside space-y-1 text-gray-500">
+              <li>We updated the AI model to llama-3.3-70b for better output quality</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Steps -->
+  <div class="max-w-6xl mx-auto px-6 py-20">
+    <h2 class="text-3xl font-bold text-center text-gray-900 mb-3">Up and running in 3 steps</h2>
+    <p class="text-center text-gray-500 mb-14">5-minute setup, fully automatic after that</p>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+      <div class="text-center">
+        <div class="w-14 h-14 rounded-2xl bg-indigo-600 text-white flex items-center justify-center text-xl font-bold mx-auto mb-5">1</div>
+        <h3 class="font-semibold text-gray-900 mb-2 text-lg">Connect GitHub</h3>
+        <p class="text-sm text-gray-500 leading-relaxed">One-click OAuth. We only read your commits — never write to your code.</p>
+      </div>
+      <div class="text-center">
+        <div class="w-14 h-14 rounded-2xl bg-indigo-600 text-white flex items-center justify-center text-xl font-bold mx-auto mb-5">2</div>
+        <h3 class="font-semibold text-gray-900 mb-2 text-lg">Set up webhook</h3>
+        <p class="text-sm text-gray-500 leading-relaxed">Add one URL to your repo. Every push triggers an AI-generated draft automatically.</p>
+      </div>
+      <div class="text-center">
+        <div class="w-14 h-14 rounded-2xl bg-indigo-600 text-white flex items-center justify-center text-xl font-bold mx-auto mb-5">3</div>
+        <h3 class="font-semibold text-gray-900 mb-2 text-lg">Publish & embed</h3>
+        <p class="text-sm text-gray-500 leading-relaxed">Approve the draft, share the public URL, or embed on your site with one script tag.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pricing -->
+  <div class="bg-gray-50 border-y border-gray-100 py-20">
+    <div class="max-w-6xl mx-auto px-6">
+      <h2 class="text-3xl font-bold text-center text-gray-900 mb-3">Pricing</h2>
+      <p class="text-center text-gray-500 mb-14">Starting at the price of a coffee</p>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+
+        <div class="bg-white rounded-2xl border border-gray-200 p-7 flex flex-col">
+          <h3 class="font-semibold text-gray-900 text-lg">Free</h3>
+          <div class="mt-2 mb-1"><span class="text-4xl font-bold text-gray-900">$0</span></div>
+          <p class="text-xs text-gray-400 mb-5">Free forever</p>
+          <ul class="space-y-2 flex-1 text-sm text-gray-600">
+            <li class="flex items-center gap-2"><svg class="w-4 h-4 text-green-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>3 changelogs/month</li>
+            <li class="flex items-center gap-2"><svg class="w-4 h-4 text-green-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>1 project</li>
+            <li class="flex items-center gap-2"><svg class="w-4 h-4 text-green-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Public changelog page</li>
+          </ul>
+          <a href="https://gitpulse-2p8d.onrender.com/auth/github" class="mt-6 text-center py-2.5 rounded-lg text-sm font-medium bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors">Get Started Free</a>
+        </div>
+
+        <div class="bg-white rounded-2xl border-2 border-indigo-500 shadow-lg p-7 flex flex-col relative">
+          <span class="absolute -top-3 left-1/2 -translate-x-1/2 text-xs bg-indigo-600 text-white px-3 py-1 rounded-full font-medium whitespace-nowrap">Most Popular</span>
+          <h3 class="font-semibold text-gray-900 text-lg">Starter</h3>
+          <div class="mt-2 mb-1"><span class="text-4xl font-bold text-gray-900">$7</span><span class="text-gray-400 text-sm">/month</span></div>
+          <p class="text-xs text-gray-400 mb-5">Coffee price, professional results</p>
+          <ul class="space-y-2 flex-1 text-sm text-gray-600">
+            <li class="flex items-center gap-2"><svg class="w-4 h-4 text-green-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>20 changelogs/month</li>
+            <li class="flex items-center gap-2"><svg class="w-4 h-4 text-green-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>3 projects</li>
+            <li class="flex items-center gap-2"><svg class="w-4 h-4 text-green-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Embed widget</li>
+            <li class="flex items-center gap-2"><svg class="w-4 h-4 text-green-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Remove branding</li>
+          </ul>
+          <a href="https://gitpulse-2p8d.onrender.com/pricing/checkout/starter" class="mt-6 text-center py-2.5 rounded-lg text-sm font-medium bg-indigo-600 text-white hover:bg-indigo-500 transition-colors">Get Starter — $7/mo</a>
+        </div>
+
+        <div class="bg-white rounded-2xl border border-gray-200 p-7 flex flex-col">
+          <h3 class="font-semibold text-gray-900 text-lg">Pro</h3>
+          <div class="mt-2 mb-1"><span class="text-4xl font-bold text-gray-900">$19</span><span class="text-gray-400 text-sm">/month</span></div>
+          <p class="text-xs text-gray-400 mb-5">For serious projects</p>
+          <ul class="space-y-2 flex-1 text-sm text-gray-600">
+            <li class="flex items-center gap-2"><svg class="w-4 h-4 text-green-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Unlimited changelogs</li>
+            <li class="flex items-center gap-2"><svg class="w-4 h-4 text-green-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>10 projects</li>
+            <li class="flex items-center gap-2"><svg class="w-4 h-4 text-green-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Custom domain</li>
+            <li class="flex items-center gap-2"><svg class="w-4 h-4 text-green-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Priority support</li>
+          </ul>
+          <a href="https://gitpulse-2p8d.onrender.com/pricing/checkout/pro" class="mt-6 text-center py-2.5 rounded-lg text-sm font-medium bg-gray-900 text-white hover:bg-gray-700 transition-colors">Get Pro — $19/mo</a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="max-w-6xl mx-auto px-6 py-8 flex items-center justify-between text-xs text-gray-400 border-t border-gray-100">
+    <span>© 2026 GitPulse</span>
+    <div class="flex gap-6">
+      <a href="https://gitpulse-2p8d.onrender.com/pricing" class="hover:text-gray-600">Pricing</a>
+      <a href="https://gitpulse-2p8d.onrender.com/how-it-works" class="hover:text-gray-600">How it works</a>
+      <a href="https://github.com/emrefkrlr/gitpulse" class="hover:text-gray-600">GitHub</a>
+    </div>
+  </footer>
+
+</body>
+</html>
