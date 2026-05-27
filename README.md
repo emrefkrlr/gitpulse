@@ -1,175 +1,166 @@
 # GitPulse 🚀
 
-> Automated marketing-language changelogs from Git commits — for solo developers and indie hackers.
+> AI-powered changelog generator — turns Git commits into human-friendly release notes automatically.
 
-**Stack:** Python 3.12 · FastAPI · HTMX · PostgreSQL · SQLAlchemy async · Jinja2 · Tailwind CSS CDN
+**Live:** https://emrefkrlr.github.io/gitpulse  
+**App:** https://gitpulse-2p8d.onrender.com
 
 ---
 
-## Quick start (local)
+## What it does
 
-### 1. Clone & configure
+Connect your GitHub repo → add a webhook → every `git push` triggers AI to read your commits and draft a changelog. You review it, publish it, done.
+
+No more blank Notion pages. No more copy-pasting commits into ChatGPT before every release.
+
+---
+
+## Features
+
+- **GitHub OAuth** — one-click login, read-only access to your commits
+- **Webhook automation** — every push creates a draft changelog automatically
+- **AI fallback chain** — DeepSeek → Groq → OpenAI → Anthropic, switches silently on quota/errors
+- **Public changelog page** — `gitpulse-2p8d.onrender.com/username/repo`
+- **Embed widget** — `<script>` tag or iframe, works on any site
+- **Freemium** — 3 changelogs/month free, paid plans from $7/month
+
+---
+
+## Tech Stack
+
+| Layer | Technology |
+|---|---|
+| Backend | Python 3.12 + FastAPI |
+| Frontend | HTMX + Jinja2 + Tailwind CSS CDN |
+| Database | PostgreSQL (Supabase) |
+| ORM | SQLAlchemy 2.0 async |
+| Migrations | Alembic |
+| Auth | GitHub OAuth (session-based) |
+| AI | DeepSeek / Groq / OpenAI / Anthropic (fallback chain) |
+| Payments | Polar.sh |
+| Hosting | Render (free tier) |
+| Analytics | Google Analytics 4 |
+
+---
+
+## Local Development
+
+### Prerequisites
+- Docker + Docker Compose
+- GitHub OAuth App
+- At least one AI API key
+
+### Setup
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/gitpulse.git
+git clone https://github.com/emrefkrlr/gitpulse.git
 cd gitpulse
 cp .env.example .env
-# Fill in .env — see below
-```
-
-### 2. Create a GitHub OAuth App
-
-1. Go to **GitHub → Settings → Developer Settings → OAuth Apps → New OAuth App**
-2. Fill in:
-   - **Homepage URL:** `http://localhost:8000`
-   - **Authorization callback URL:** `http://localhost:8000/auth/github/callback`
-3. Copy **Client ID** and **Client Secret** into `.env`
-
-### 3. Configure AI providers
-
-Add at least one to `.env`:
-
-```env
-AI_PROVIDERS=deepseek:sk-...,groq:gsk_...,openai:sk-...
-```
-
-Providers are tried in order — if one fails, the next is used automatically.
-
-### 4. Run
-
-```bash
-docker compose down -v   # fresh start
+# Fill in .env
 docker compose up -d --build
-# App available at http://localhost:8000
 ```
 
----
+App runs at `http://localhost:8000`
 
-## 🔄 Every time you restart your PC (ngrok setup)
-
-ngrok gives you a **new URL every time** you start it on the free plan. Follow these steps each time:
-
-### Step 1 — Start Docker
-
-```bash
-cd /path/to/gitpulse
-docker compose up -d
-```
-
-### Step 2 — Start ngrok
-
-```bash
-ngrok http 8000
-```
-
-Copy the new `https://xxxx.ngrok-free.app` URL from the output.
-
-### Step 3 — Update .env
-
-Open `.env` and update:
+### Environment Variables
 
 ```env
+APP_SECRET_KEY=random-32-char-string
+APP_ENV=development
+APP_BASE_URL=http://localhost:8000
+
+DATABASE_URL=postgresql+asyncpg://gitpulse:gitpulse_dev@db:5432/gitpulse
+
+GITHUB_CLIENT_ID=...
+GITHUB_CLIENT_SECRET=...
+
+# At least one required — tried in order, fails silently to next
+AI_PROVIDERS=deepseek:sk-...,groq:gsk_...,openai:sk-...
+
+POLAR_ENV=sandbox
+POLAR_ACCESS_TOKEN=...
+POLAR_WEBHOOK_SECRET=...
+POLAR_STARTER_PRODUCT_ID=...
+POLAR_PRO_PRODUCT_ID=...
+```
+
+### GitHub OAuth App
+
+1. GitHub → Settings → Developer Settings → OAuth Apps → New
+2. Homepage URL: `http://localhost:8000`
+3. Callback URL: `http://localhost:8000/auth/github/callback`
+
+---
+
+## Ngrok (local webhook testing)
+
+Every PC restart requires these steps:
+
+```bash
+# 1. Start Docker
+docker compose up -d
+
+# 2. Start ngrok
+ngrok http 8000
+
+# 3. Update .env
 APP_BASE_URL=https://xxxx.ngrok-free.app
-```
 
-### Step 4 — Restart the web container
-
-```bash
+# 4. Restart web
 docker compose restart web
+
+# 5. Update GitHub OAuth App callback URL
+# 6. Update GitHub repo webhook URL (on project page)
 ```
-
-### Step 5 — Update GitHub OAuth App
-
-Go to **GitHub → Settings → Developer Settings → OAuth Apps → GitPulse → Edit**:
-
-```
-Homepage URL:              https://xxxx.ngrok-free.app
-Authorization callback URL: https://xxxx.ngrok-free.app/auth/github/callback
-```
-
-Click **Update application**.
-
-### Step 6 — Update GitHub Webhook
-
-For each project that has a webhook set up:
-
-1. Go to **GitHub → your repo → Settings → Webhooks**
-2. Click **Edit** on the existing webhook
-3. Update **Payload URL** to:
-   ```
-   https://xxxx.ngrok-free.app/webhook/github/<project_id>/<token>
-   ```
-   *(Find this URL on your GitPulse project page)*
-4. Click **Update webhook**
-
-> 💡 **Tip:** To avoid repeating steps 3–6 every time, consider deploying to Railway (free tier) — you get a permanent URL. See the deploy section below.
 
 ---
 
-## Testing checklist
+## Production Deploy
 
-After every restart, verify these work:
+**Database:** Supabase (free PostgreSQL)  
+**Backend:** Render (free Web Service, Docker)  
+**Payments:** Polar.sh  
 
-| Test | How | Expected |
-|---|---|---|
-| Landing page | Open `https://xxxx.ngrok-free.app` | Page loads, no errors |
-| GitHub login | Click "Start Free with GitHub" | Redirects to GitHub, then back to dashboard |
-| Load repos | Click "Load My Repos" | Your GitHub repos appear |
-| Connect repo | Click "Connect" on a repo | Redirected to project page |
-| Manual generate | Enter a version, click "Generate" | AI changelog draft appears |
-| Publish | Click "Publish" on a draft | Green success message, public URL shown |
-| Public page | Open `https://xxxx.ngrok-free.app/username/repo` | Changelog visible without login |
-| Webhook | `git push` to connected repo | Draft appears on project page automatically |
-| Embed preview | Click "Preview iframe →" on project page | Changelog renders in minimal layout |
+See `README.md` deploy section for step-by-step.
 
 ---
 
-## Free production deploy (Railway + Supabase)
+## Pricing
 
-### Supabase (free PostgreSQL)
-
-1. Create account at https://supabase.com → New project
-2. Go to **Settings → Database** → copy the **URI**
-3. Change `postgresql://` to `postgresql+asyncpg://`
-4. Set as `DATABASE_URL` in Railway env vars
-
-### Railway (free backend hosting)
-
-```bash
-npm install -g @railway/cli
-railway login
-railway init
-railway up
-```
-
-Set all env vars from your `.env` in the Railway dashboard. Railway auto-detects the `Dockerfile`.
-
-Your app gets a permanent URL like `https://gitpulse.up.railway.app` — no more ngrok needed.
+| Plan | Price | Changelogs/month | Projects |
+|---|---|---|---|
+| Free | $0 | 3 | 1 |
+| Starter | $7/mo | 20 | 3 |
+| Pro | $19/mo | Unlimited | 10 |
 
 ---
 
-## Project structure
+## Project Structure
 
 ```
 gitpulse/
 ├── app/
-│   ├── main.py              # FastAPI app entry point
-│   ├── config.py            # Settings (reads .env)
-│   ├── database.py          # Async SQLAlchemy
-│   ├── models/user.py       # User, Project, Changelog models
+│   ├── main.py              # FastAPI app, middleware, routers
+│   ├── config.py            # Pydantic Settings
+│   ├── database.py          # Async SQLAlchemy engine
+│   ├── models/
+│   │   └── user.py          # User, Project, Changelog models
 │   ├── routers/
 │   │   ├── auth.py          # GitHub OAuth
 │   │   ├── dashboard.py     # Dashboard + repo picker
 │   │   ├── changelog.py     # Generate / publish / public page
 │   │   ├── webhook.py       # GitHub webhook receiver
 │   │   ├── embed.py         # Embed script + iframe
+│   │   ├── payments.py      # Polar.sh checkout + webhook
 │   │   └── pages.py         # Landing, pricing, how-it-works
 │   ├── services/
 │   │   ├── github.py        # GitHub API wrapper
-│   │   ├── ai.py            # Multi-provider AI fallback chain
+│   │   ├── ai.py            # Multi-provider fallback chain
 │   │   └── auth.py          # Session helpers
 │   └── templates/           # Jinja2 HTML templates
+│       └── partials/        # HTMX partials
 ├── alembic/                 # DB migrations
+├── index.html               # GitHub Pages landing page
 ├── Dockerfile
 ├── docker-compose.yml
 ├── requirements.txt
@@ -178,22 +169,26 @@ gitpulse/
 
 ---
 
-## AI providers
+## Security Checklist
 
-| Provider | Format | Free? | Notes |
-|---|---|---|---|
-| DeepSeek | `deepseek:sk-...` | Cheap ($0.14/M tokens) | Recommended first |
-| Groq | `groq:gsk_...` | Free tier | Fast, llama-3.3-70b |
-| OpenAI | `openai:sk-...` | Paid | gpt-4o-mini |
-| Anthropic | `anthropic:sk-ant-...` | Paid | claude-haiku |
-| OpenRouter | `openrouter:sk-or-...` | Free models | mistral-7b free |
+- [ ] `APP_SECRET_KEY` is random 32+ chars, never committed
+- [ ] `.env` is in `.gitignore`
+- [ ] `APP_ENV=production` on Render
+- [ ] GitHub OAuth callback URL matches production domain
+- [ ] Polar webhook signature verified on every event
 
 ---
 
-## Security checklist (before going live)
+## Roadmap
 
-- [ ] `APP_SECRET_KEY` is a random 32+ char string, never committed to git
-- [ ] `.env` is in `.gitignore` — never push real keys
-- [ ] `APP_ENV=production` on Railway (disables `/api/docs`)
-- [ ] GitHub OAuth App callback URL matches your production domain
-- [ ] Rotate `APP_SECRET_KEY` invalidates all sessions
+- [ ] Email notifications (Resend) — new changelog alerts for subscribers
+- [ ] Slack / Discord integration
+- [ ] Custom domain support (Pro plan)
+- [ ] Monthly usage auto-reset (APScheduler)
+- [ ] GitLab support
+
+---
+
+## License
+
+MIT
